@@ -13,3 +13,9 @@ export async function addDomen(domen: Domen ){
 		return response.data
 	})
 }
+
+export async function deleteDomen(domen: Domen ){
+	return await $host.post('/domens/delete', domen).then((response)=>{
+		return response.data
+	})
+}

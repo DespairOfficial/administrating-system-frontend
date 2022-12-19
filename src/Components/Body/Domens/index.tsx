@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
-import { getDomens } from '../../../http/domens';
+import { getDomens, deleteDomen } from '../../../http/domens';
 import { Domen } from '../../../interfaces/proxyResponse';
-import apacheImg from '../../../images/apache.jpeg';
-import nginxImg from '../../../images/nginx.png';
+
 import Modal from './Modal';
+import DomenItem from './Domen';
 
 const Domens = () => {
-
 	const [domens, setDomens] = useState<Domen[]>([]);
-	const [isShowingModal, setIsShowingModal] = useState<boolean>(true);
+	const [isShowingModal, setIsShowingModal] = useState<boolean>(false);
 	const setListOfDomens = async () => {
 		const domensList = await getDomens();
 		setDomens(domensList.domens);
@@ -17,38 +16,37 @@ const Domens = () => {
 		setListOfDomens();
 	}, []);
 	const onAddDomen = () => {
-		setIsShowingModal(true)
+		setIsShowingModal(true);
 	};
-	const onDeleteDomen = () => {
-		console.log('delete this');
+	const onDeleteDomen = (domen: Domen) => {
+		const index = domens.findIndex(
+			(item) => item.name == domen.name && item.server == domen.server
+		);
+		setDomens((prev)=>{
+			const newArray = [...prev];
+			newArray.splice(index,1)
+			return newArray
+		})
+		deleteDomen(domen);
 	};
-
 
 	return (
 		<div className="flex flex-col bg-[#323639] p-2 overflow-y-auto h-full justify-around w-full  ">
-			<Modal isShowing={isShowingModal} setIsShowing = {setIsShowingModal} state={domens} setState = {setDomens}/>
+			<Modal
+				isShowing={isShowingModal}
+				setIsShowing={setIsShowingModal}
+				state={domens}
+				setState={setDomens}
+			/>
 			<div className="overflow-y-auto p-4 border mb-4">
 				{domens.map((domen, i) => {
 					return (
-						<div
+						<DomenItem
 							key={i}
-							className="flex flex-row p-4 items-center h-24 border mb-4 justify-between"
-						>
-							<div className='flex flex-row items-center space-x-4'>
-								<div className="text-4xl">{domen.name}</div>
-								<div className="bg-red-500 p-2 rounded-md cursor-pointer" onClick={onDeleteDomen}> Delete </div>
-							</div>
-
-							<div className="flex flex-row text-sm font-light justify-end items-center">
-								<div>Powered by</div>
-								<img
-									className="w-10"
-									src={domen.server == 'apache' ? apacheImg : nginxImg}
-									alt={domen.server}
-								/>
-								<div>{domen.server[0].toUpperCase() + domen.server.slice(1)}</div>
-							</div>
-						</div>
+							name={domen.name}
+							server={domen.server}
+							onDelete={onDeleteDomen}
+						/>
 					);
 				})}
 			</div>
