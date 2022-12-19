@@ -1,0 +1,74 @@
+.modalWrapper {
+	position: absolute;
+	overflow-x: hidden;
+	justify-content: center;
+	z-index: 98;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	background-color: rgba(0, 0, 0, 0.8);
+	align-items: center;
+	top: 0;
+	left: 0;
+}
+.modalBg {
+	opacity: 0.8;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+.modal {
+	background-color: rgba(255, 255, 255, 1);
+	width: 50vw;
+	height: 50vh;
+	z-index: 99;
+	color: black;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	position: relative;
+	.main {
+		width: 100%;
+		height: 100%;
+		form {
+			height: 100%;
+			padding: 2rem;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			.formHead {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				.input {
+					padding: 0.5rem;
+					margin-block: 1rem;
+					text-align: center;
+					border: 1px solid black;
+				}
+				.select {
+					padding: 0.5rem;
+					margin-block: 1rem;
+					border-radius: 10%;
+				}
+			}
+			.options {
+				display: flex;
+				justify-content: center;
+				button {
+					width: 20%;
+					text-align: center;
+					background-color: #71ba51;
+					padding: 0.8rem;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
+	.close {
+		cursor: pointer;
+		position: absolute;
+		right: 2rem;
+		top: 2rem;
+	}
+}
