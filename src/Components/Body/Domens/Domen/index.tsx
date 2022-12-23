@@ -12,7 +12,9 @@ const DomenItem = ({ name, server, onDelete }: DomenProps) => {
 	return (
 		<div className="flex flex-row p-4 items-center h-24 border mb-4 justify-between">
 			<div className="flex flex-row items-center space-x-4">
-				<div className="text-4xl">{name}</div>
+				<div className="text-4xl">
+					<a href={"http://"+name}>{name}</a>
+					</div>
 				<div
 					className="bg-red-500 p-2 rounded-md cursor-pointer"
 					onClick={() => onDelete({ name, server })}

@@ -19,3 +19,9 @@ export async function deleteDomen(domen: Domen ){
 		return response.data
 	})
 }
+
+export async function reloadDNS(){
+	return await $host.get('/domens/reload').then((response)=>{
+		return response.data
+	})
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getDomens, deleteDomen } from '../../../http/domens';
+import { getDomens, deleteDomen, reloadDNS } from '../../../http/domens';
 import { Domen } from '../../../interfaces/proxyResponse';
 
 import Modal from './Modal';
@@ -22,11 +22,11 @@ const Domens = () => {
 		const index = domens.findIndex(
 			(item) => item.name == domen.name && item.server == domen.server
 		);
-		setDomens((prev)=>{
+		setDomens((prev) => {
 			const newArray = [...prev];
-			newArray.splice(index,1)
-			return newArray
-		})
+			newArray.splice(index, 1);
+			return newArray;
+		});
 		deleteDomen(domen);
 	};
 
@@ -50,11 +50,19 @@ const Domens = () => {
 					);
 				})}
 			</div>
-			<div
-				className="flex justify-center items-center bg-green-500 p-5 rounded-md w-1/2 self-center cursor-pointer "
-				onClick={onAddDomen}
-			>
-				Add domen
+			<div className='flex flex-col justify-center space-y-2'>
+				<div
+					className="flex justify-center items-center bg-green-500 p-5 rounded-md w-1/2 self-center cursor-pointer "
+					onClick={onAddDomen}
+				>
+					Add domen
+				</div>
+				<div
+					className="flex justify-center items-center bg-green-500 p-5 rounded-md w-1/2 self-center cursor-pointer "
+					onClick={reloadDNS}
+				>
+					Reload BIND9
+				</div>
 			</div>
 		</div>
 	);
